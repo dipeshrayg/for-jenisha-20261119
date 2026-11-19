@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>For Barsa ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:radial-gradient(ellipse at 50% 80%,#0a1a08,#060f04 60%,#020804);min-height:100vh;overflow:hidden;font-family:'Raleway',sans-serif;color:#d4ffb0;cursor:none}
+    canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+    .cur{position:fixed;z-index:9999;width:14px;height:14px;border-radius:50%;background:rgba(180,255,100,.8);pointer-events:none;transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(180,255,100,.6)}
+    .scene{position:relative;z-index:10;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:clamp(12px,2.5vh,24px)}
+    .title{font-family:'Dancing Script',cursive;font-size:clamp(3rem,11vw,7rem);font-weight:700;color:#c8ff80;text-shadow:0 0 40px rgba(150,255,80,.5),0 0 80px rgba(100,200,60,.3);opacity:0;animation:glow 2s ease forwards 2s}
+    .sub{font-size:clamp(.7rem,2vw,.95rem);letter-spacing:.4em;text-transform:uppercase;color:rgba(180,255,120,.45);opacity:0;animation:fup 1s ease forwards 4.2s}
+    .hw{opacity:0;animation:fup .8s ease forwards 5s}
+    .hi{font-size:clamp(2rem,6vw,3.2rem);display:inline-block;animation:drift 3s ease-in-out infinite 5s;filter:drop-shadow(0 0 12px rgba(255,220,100,.8))}
+    .mw{max-width:min(560px,90vw);opacity:0;animation:fup 1.2s ease forwards 6s}
+    .msg{font-size:clamp(.86rem,2.3vw,1.08rem);font-weight:300;line-height:2;color:rgba(200,255,160,.8)}
+    .msg em{color:#b0ff60;font-style:italic}
+    .msg strong{color:#d8ff90}
+    .btn{opacity:0;animation:fup .8s ease forwards 8.8s;background:transparent;border:1.5px solid rgba(150,255,80,.45);color:#d4ffb0;font-family:'Raleway',sans-serif;font-size:clamp(.78rem,2vw,.9rem);font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:13px 38px;border-radius:50px;cursor:pointer;backdrop-filter:blur(8px);transition:all .3s}
+    .btn:hover{border-color:rgba(150,255,80,.9);box-shadow:0 0 24px rgba(120,220,60,.4);transform:translateY(-2px)}
+    .ds{position:fixed;bottom:16px;right:18px;font-size:.68rem;letter-spacing:.15em;color:rgba(150,255,80,.25);z-index:20;opacity:0;animation:fi 1s ease forwards 11s}
+    @keyframes glow{from{opacity:0;filter:blur(20px)}to{opacity:1;filter:blur(0)}}
+    @keyframes fup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fi{to{opacity:1}}
+    @keyframes drift{0%,100%{transform:translateY(0) translateX(0)}33%{transform:translateY(-6px) translateX(4px)}66%{transform:translateY(4px) translateX(-4px)}}
+  </style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="cur" id="cur"></div>
+<div class="scene">
+  <div class="title">Barsa</div>
+  <div class="sub">you light up the dark</div>
+  <div class="hw"><span class="hi">✨</span></div>
+  <div class="mw"><p class="msg">
+    In the quiet of a dark forest night,<br>
+    <em>fireflies remind me of you —</em><br>
+    small, soft, impossible to ignore.<br><br>
+    You carry a light inside you<br>
+    that <strong>turns ordinary nights</strong> into magic.<br><br>
+    <em>Barsa</em>, you are that light in my world.
+  </p></div>
+  <button class="btn" id="btn" onclick="sendLove()">✨ Spark My World ✨</button>
+</div>
+<div class="ds">November 19 · 2026</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=cv.width=window.innerWidth,H=cv.height=window.innerHeight;
+const flies=[];
+class Fly{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H*.85+H*.1;this.tx=this.x+(Math.random()-.5)*120;this.ty=this.y+(Math.random()-.5)*120;this.op=0;this.maxOp=Math.random()*.7+.3;this.phase='in';this.speed=Math.random()*.015+.005;this.t=0}update(){this.t+=this.speed;const dx=this.tx-this.x,dy=this.ty-this.y;this.x+=dx*.02;this.y+=dy*.02;if(this.phase==='in'){this.op+=.03;if(this.op>=this.maxOp){this.op=this.maxOp;if(Math.random()<.01)this.phase='out'}}else{this.op-=.02;if(this.op<=0)this.reset()}}draw(){const r=Math.random()<.8?3:5;ctx.beginPath();ctx.arc(this.x,this.y,r,0,Math.PI*2);ctx.fillStyle=`rgba(180,255,100,${this.op})`;ctx.fill();const g=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,r*5);g.addColorStop(0,`rgba(180,255,100,${this.op*.4})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.beginPath();ctx.arc(this.x,this.y,r*5,0,Math.PI*2);ctx.fillStyle=g;ctx.fill()}}
+for(let i=0;i<100;i++)flies.push(new Fly());
+function drawTrees(){ctx.fillStyle='rgba(5,15,3,.9)';for(let i=0;i<12;i++){const x=i*(W/11);const h=H*.35+Math.sin(i*2.3)*H*.08;ctx.beginPath();ctx.moveTo(x,H);ctx.lineTo(x-30,H-h*.4);ctx.lineTo(x,H-h);ctx.lineTo(x+30,H-h*.4);ctx.closePath();ctx.fill()}}
+function loop(){ctx.clearRect(0,0,W,H);drawTrees();flies.forEach(f=>{f.update();f.draw()});requestAnimationFrame(loop)}
+loop();
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+function sendLove(){const btn=document.getElementById('btn');btn.textContent='💚 You Are My Light 💚';setTimeout(()=>btn.textContent='✨ Spark My World ✨',3000)}
+window.addEventListener('resize',()=>{W=cv.width=window.innerWidth;H=cv.height=window.innerHeight});
+</script>
+</body>
+</html>
